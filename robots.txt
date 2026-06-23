@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://recovery-line-henna.vercel.app/sitemap.xml

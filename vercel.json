@@ -1,0 +1,65 @@
+{
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/головна-сторінка",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/головна-сторінка/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/послуги",
+      "destination": "/services/",
+      "permanent": true
+    },
+    {
+      "source": "/послуги/",
+      "destination": "/services/",
+      "permanent": true
+    },
+    {
+      "source": "/ціни",
+      "destination": "/prices/",
+      "permanent": true
+    },
+    {
+      "source": "/ціни/",
+      "destination": "/prices/",
+      "permanent": true
+    },
+    {
+      "source": "/про-нас",
+      "destination": "/about/",
+      "permanent": true
+    },
+    {
+      "source": "/про-нас/",
+      "destination": "/about/",
+      "permanent": true
+    },
+    {
+      "source": "/контактна-інформація",
+      "destination": "/contacts/",
+      "permanent": true
+    },
+    {
+      "source": "/контактна-інформація/",
+      "destination": "/contacts/",
+      "permanent": true
+    },
+    {
+      "source": "/відгуки",
+      "destination": "/#reviews",
+      "permanent": true
+    },
+    {
+      "source": "/відгуки/",
+      "destination": "/#reviews",
+      "permanent": true
+    }
+  ]
+}
