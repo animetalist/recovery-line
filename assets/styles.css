@@ -25,6 +25,10 @@ html {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   color: var(--color-ink);
   background: var(--color-soft);
@@ -38,6 +42,10 @@ body {
     sans-serif;
   line-height: 1.6;
   text-rendering: optimizeLegibility;
+}
+
+main {
+  flex: 1 0 auto;
 }
 
 img {
@@ -660,6 +668,7 @@ blockquote footer {
 }
 
 .site-footer {
+  margin-top: auto;
   padding: 38px 0;
   color: rgba(255, 255, 255, 0.78);
   background: #101517;
@@ -758,6 +767,11 @@ blockquote footer {
     order: 3;
     width: 100%;
     justify-content: center;
+  }
+
+  .site-nav a {
+    justify-content: center;
+    text-align: center;
   }
 
   .menu-toggle {

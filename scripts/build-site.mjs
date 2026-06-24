@@ -19,7 +19,13 @@ const escapeJsonForHtml = (value) => JSON.stringify(value, null, 2).replaceAll("
 
 const isExternalUrl = (url = "") => /^https?:\/\//.test(url);
 
-const pageDepthPrefix = (page) => (page.path === "/" || page.file === "404.html" ? "" : "../");
+const pageDepthPrefix = (page) => {
+  if (page.file === "404.html") {
+    return "/";
+  }
+
+  return page.path === "/" ? "" : "../";
+};
 
 const isRootLevelPage = (page) => page.path === "/" || page.file === "404.html";
 
@@ -43,6 +49,10 @@ const absoluteUrl = (site, value = "") => {
 
 const linkHref = (page, url = "") => {
   if (isExternalUrl(url) || url.startsWith("#") || url.startsWith("tel:") || url.startsWith("mailto:")) {
+    return url;
+  }
+
+  if (page.file === "404.html") {
     return url;
   }
 
