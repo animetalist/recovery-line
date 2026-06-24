@@ -19,7 +19,9 @@ const escapeJsonForHtml = (value) => JSON.stringify(value, null, 2).replaceAll("
 
 const isExternalUrl = (url = "") => /^https?:\/\//.test(url);
 
-const pageDepthPrefix = (page) => (page.path === "/" ? "" : "../");
+const pageDepthPrefix = (page) => (page.path === "/" || page.file === "404.html" ? "" : "../");
+
+const isRootLevelPage = (page) => page.path === "/" || page.file === "404.html";
 
 const canonicalUrl = (site, page) => `${site.url}${page.path === "/" ? "/" : page.path}`;
 
@@ -44,7 +46,7 @@ const linkHref = (page, url = "") => {
     return url;
   }
 
-  if (page.path === "/") {
+  if (isRootLevelPage(page)) {
     return url === "/" ? "/" : url.replace(/^\//, "");
   }
 
@@ -83,7 +85,7 @@ const renderHead = (site, page) => {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapeHtml(page.seo.title)}</title>
   <meta name="description" content="${escapeHtml(page.seo.description)}">
-  <meta name="robots" content="${escapeHtml(site.robots)}">
+  <meta name="robots" content="${escapeHtml(page.seo.robots || site.robots)}">
   <link rel="canonical" href="${escapeHtml(canonicalUrl(site, page))}">
 ${preload}  <link rel="stylesheet" href="${escapeHtml(cssPath)}">
   <link rel="icon" type="image/webp" href="${escapeHtml(iconPath)}">
@@ -412,12 +414,22 @@ ${page.contact.addressLines.map((line) => `            <p>${escapeHtml(line)}</p
       </div>
     </section>`;
 
+const renderNotFound = (page) => `<section class="page-hero not-found-hero">
+      <div class="container">
+        <p class="eyebrow">${escapeHtml(page.hero.eyebrow)}</p>
+        <h1>${escapeHtml(page.hero.title)}</h1>
+        <p>${escapeHtml(page.hero.lead)}</p>
+        <a class="button" href="/">${escapeHtml(page.hero.buttonLabel)}</a>
+      </div>
+    </section>`;
+
 const pageRenderers = {
   home: (_site, page) => renderHome(page),
   services: (_site, page) => renderServices(page),
   prices: (_site, page) => renderPrices(page),
   about: (_site, page) => renderAbout(page),
   contacts: (site, page) => renderContacts(site, page),
+  notFound: (_site, page) => renderNotFound(page),
 };
 
 const slugify = (value = "") =>
@@ -584,6 +596,10 @@ function renderStructuredData(site, page) {
     };
   }
 
+  if (!data) {
+    return "";
+  }
+
   return `<script type="application/ld+json">
 ${escapeJsonForHtml(cleanJsonLd(data))}
     </script>`;
@@ -638,6 +654,24 @@ const pages = Object.fromEntries(
     pageKeys.map(async (key) => [key, await readJson(path.join(root, `content/pages/${key}.json`))]),
   ),
 );
+const notFoundPage = {
+  path: "/404.html",
+  file: "404.html",
+  seo: {
+    title: `Сторінку не знайдено | ${site.name}`,
+    description: "Сторінку не знайдено. Перейдіть на головну сторінку Recovery Line.",
+    robots: "noindex,follow",
+    ogTitle: `Сторінку не знайдено | ${site.name}`,
+    ogDescription: "Сторінку не знайдено. Перейдіть на головну сторінку Recovery Line.",
+    ogImage: site.logo,
+  },
+  hero: {
+    eyebrow: "404",
+    title: "Сторінку не знайдено",
+    lead: "Можливо, адреса змінилася або сторінку було видалено. Перейдіть на головну, щоб знайти потрібну інформацію.",
+    buttonLabel: "На головну",
+  },
+};
 
 await rm(outDir, { recursive: true, force: true });
 await mkdir(outDir, { recursive: true });
@@ -656,11 +690,14 @@ await Promise.all(
     ];
   }),
 );
+const notFoundDocument = renderDocument(site, navigation, "notFound", notFoundPage);
 await Promise.all([
+  writeFile(path.join(root, notFoundPage.file), notFoundDocument),
+  writeFile(path.join(outDir, notFoundPage.file), notFoundDocument),
   writeFile(path.join(root, "sitemap.xml"), renderSitemap(site, pages)),
   writeFile(path.join(outDir, "sitemap.xml"), renderSitemap(site, pages)),
   writeFile(path.join(root, "robots.txt"), renderRobots(site)),
   writeFile(path.join(outDir, "robots.txt"), renderRobots(site)),
 ]);
 
-console.log(`Built ${pageKeys.length} pages from content JSON into dist/.`);
+console.log(`Built ${pageKeys.length} pages and 404.html from content JSON into dist/.`);

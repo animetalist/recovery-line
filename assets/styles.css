@@ -719,6 +719,10 @@ blockquote footer {
   font-size: 1.14rem;
 }
 
+.not-found-hero .button {
+  margin-top: 28px;
+}
+
 .service-detail {
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr);
