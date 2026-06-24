@@ -1,0 +1,934 @@
+media:
+  input: assets/images
+  output: /assets/images
+
+content:
+  - name: site
+    label: Загальні налаштування
+    type: file
+    path: content/site.json
+    format: json
+    fields:
+      - name: site
+        label: Дані клініки
+        type: object
+        fields:
+          - name: name
+            label: Назва
+            type: string
+            required: true
+          - name: alternateName
+            label: Додаткова назва
+            type: string
+          - name: language
+            type: string
+            hidden: true
+          - name: locale
+            type: string
+            hidden: true
+          - name: url
+            label: Адреса сайту
+            type: string
+            required: true
+          - name: robots
+            label: Індексація
+            type: select
+            options:
+              values:
+                - name: noindex,nofollow
+                  label: Не індексувати сайт
+                - name: index,follow
+                  label: Індексувати сайт
+          - name: themeColor
+            label: Колір теми браузера
+            type: string
+          - name: brandNote
+            label: Підпис у шапці
+            type: string
+          - name: logo
+            label: Логотип
+            type: image
+            options:
+              extensions: [webp, jpg, jpeg, png, svg]
+          - name: heroImage
+            label: Головне фото для схем і соцмереж
+            type: image
+            options:
+              extensions: [webp, jpg, jpeg, png]
+          - name: phone
+            label: Телефон
+            type: string
+          - name: priceRange
+            label: Діапазон цін для Google
+            type: string
+          - name: areaServed
+            label: Місто або зона обслуговування
+            type: string
+          - name: openingHours
+            label: Графік для Google
+            type: string
+          - name: scheduleText
+            label: Графік на сторінці
+            type: string
+          - name: address
+            label: Адреса
+            type: object
+            fields:
+              - name: streetAddress
+                label: Вулиця і будинок
+                type: string
+              - name: addressLocality
+                label: Місто
+                type: string
+              - name: postalCode
+                label: Індекс
+                type: string
+              - name: addressCountry
+                label: Країна
+                type: string
+              - name: display
+                label: Адреса у футері
+                type: string
+          - name: links
+            label: Посилання
+            type: object
+            fields:
+              - name: booking
+                label: Посилання для запису
+                type: string
+              - name: telegram
+                label: Telegram URL
+                type: string
+              - name: telegramLabel
+                label: Telegram підпис
+                type: string
+              - name: instagram
+                label: Instagram URL
+                type: string
+              - name: instagramLabel
+                label: Instagram підпис
+                type: string
+              - name: maps
+                label: Google Maps URL
+                type: string
+          - name: medicalSpecialty
+            label: Медичні спеціалізації для Google
+            type: string
+            list: true
+      - name: navigation
+        label: Меню сайту
+        type: object
+        list: true
+        fields:
+          - name: key
+            type: string
+            hidden: true
+          - name: label
+            label: Текст пункту меню
+            type: string
+          - name: url
+            label: Посилання
+            type: string
+          - name: cta
+            label: Виділити як кнопку
+            type: boolean
+
+  - name: home
+    label: Головна сторінка
+    type: file
+    path: content/pages/home.json
+    format: json
+    fields:
+      - name: path
+        type: string
+        hidden: true
+      - name: file
+        type: string
+        hidden: true
+      - name: breadcrumb
+        label: Назва сторінки
+        type: string
+      - name: priority
+        type: string
+        hidden: true
+      - name: seo
+        label: SEO і соцмережі
+        type: object
+        fields:
+          - name: title
+            label: SEO title
+            type: string
+            required: true
+          - name: description
+            label: SEO description
+            type: text
+            required: true
+          - name: ogTitle
+            label: Заголовок для соцмереж
+            type: string
+          - name: ogDescription
+            label: Опис для соцмереж
+            type: text
+          - name: ogImage
+            label: Зображення для соцмереж
+            type: image
+            options:
+              extensions: [webp, jpg, jpeg, png]
+          - name: preloadImage
+            label: Головне фото для швидкого завантаження
+            type: image
+            options:
+              extensions: [webp, jpg, jpeg, png]
+      - name: hero
+        label: Перший екран
+        type: object
+        fields:
+          - name: eyebrow
+            label: Малий підпис
+            type: string
+          - name: title
+            label: Заголовок
+            type: text
+            required: true
+          - name: lead
+            label: Опис
+            type: text
+          - name: actions
+            label: Кнопки
+            type: object
+            list: true
+            fields:
+              - name: label
+                label: Текст кнопки
+                type: string
+              - name: url
+                label: Посилання
+                type: string
+              - name: variant
+                label: Стиль кнопки
+                type: select
+                options:
+                  values:
+                    - name: primary
+                      label: Основна
+                    - name: secondary
+                      label: Другорядна
+      - name: points
+        label: Три ключові переваги
+        type: object
+        list: true
+        fields:
+          - name: title
+            label: Заголовок
+            type: string
+          - name: text
+            label: Текст
+            type: text
+      - name: intro
+        label: Блок “Підхід”
+        type: object
+        fields:
+          - name: kicker
+            label: Малий підпис
+            type: string
+          - name: title
+            label: Заголовок
+            type: text
+          - name: lead
+            label: Основний текст
+            type: text
+          - name: items
+            label: Список пунктів
+            type: string
+            list: true
+      - name: servicesPreview
+        label: Блок послуг на головній
+        type: object
+        fields:
+          - name: kicker
+            label: Малий підпис
+            type: string
+          - name: title
+            label: Заголовок
+            type: text
+          - name: lead
+            label: Опис
+            type: text
+          - name: cards
+            label: Картки послуг
+            type: object
+            list: true
+            fields:
+              - name: title
+                label: Назва
+                type: string
+              - name: text
+                label: Опис
+                type: text
+              - name: image
+                label: Фото
+                type: image
+                options:
+                  extensions: [webp, jpg, jpeg, png]
+              - name: width
+                type: number
+                hidden: true
+              - name: height
+                type: number
+                hidden: true
+              - name: alt
+                label: Опис фото для доступності
+                type: string
+      - name: process
+        label: Як проходить робота
+        type: object
+        fields:
+          - name: kicker
+            label: Малий підпис
+            type: string
+          - name: title
+            label: Заголовок
+            type: text
+          - name: lead
+            label: Опис
+            type: text
+          - name: steps
+            label: Етапи
+            type: object
+            list: true
+            fields:
+              - name: title
+                label: Назва етапу
+                type: string
+              - name: text
+                label: Опис
+                type: text
+      - name: reviews
+        label: Відгуки
+        type: object
+        fields:
+          - name: kicker
+            label: Малий підпис
+            type: string
+          - name: title
+            label: Заголовок
+            type: string
+          - name: lead
+            label: Опис
+            type: text
+          - name: items
+            label: Відгуки
+            type: object
+            list: true
+            fields:
+              - name: text
+                label: Текст відгуку
+                type: text
+              - name: author
+                label: Підпис
+                type: string
+      - name: cta
+        label: Заклик до дії
+        type: object
+        fields:
+          - name: title
+            label: Заголовок
+            type: string
+          - name: text
+            label: Текст
+            type: text
+          - name: buttonLabel
+            label: Текст кнопки
+            type: string
+          - name: buttonUrl
+            label: Посилання кнопки
+            type: string
+
+  - name: services
+    label: Сторінка “Послуги”
+    type: file
+    path: content/pages/services.json
+    format: json
+    fields:
+      - name: path
+        type: string
+        hidden: true
+      - name: file
+        type: string
+        hidden: true
+      - name: breadcrumb
+        label: Назва сторінки
+        type: string
+      - name: priority
+        type: string
+        hidden: true
+      - name: seo
+        label: SEO і соцмережі
+        type: object
+        fields:
+          - name: title
+            label: SEO title
+            type: string
+          - name: description
+            label: SEO description
+            type: text
+          - name: ogTitle
+            label: Заголовок для соцмереж
+            type: string
+          - name: ogDescription
+            label: Опис для соцмереж
+            type: text
+          - name: ogImage
+            label: Зображення для соцмереж
+            type: image
+            options:
+              extensions: [webp, jpg, jpeg, png]
+      - name: hero
+        label: Перший екран
+        type: object
+        fields:
+          - name: eyebrow
+            label: Малий підпис
+            type: string
+          - name: title
+            label: Заголовок
+            type: text
+          - name: lead
+            label: Опис
+            type: text
+      - name: overview
+        label: Перелік послуг
+        type: object
+        fields:
+          - name: kicker
+            label: Малий підпис
+            type: string
+          - name: title
+            label: Заголовок
+            type: text
+          - name: lead
+            label: Опис
+            type: text
+          - name: details
+            label: Послуги
+            type: object
+            list: true
+            fields:
+              - name: title
+                label: Назва послуги
+                type: string
+              - name: text
+                label: Опис
+                type: text
+              - name: items
+                label: Пункти під описом
+                type: string
+                list: true
+      - name: procedure
+        label: Фізіопроцедури
+        type: object
+        fields:
+          - name: image
+            label: Фото
+            type: image
+            options:
+              extensions: [webp, jpg, jpeg, png]
+          - name: width
+            type: number
+            hidden: true
+          - name: height
+            type: number
+            hidden: true
+          - name: alt
+            label: Опис фото для доступності
+            type: string
+          - name: kicker
+            label: Малий підпис
+            type: string
+          - name: title
+            label: Заголовок
+            type: text
+          - name: lead
+            label: Опис
+            type: text
+          - name: items
+            label: Список пунктів
+            type: string
+            list: true
+      - name: cta
+        label: Заклик до дії
+        type: object
+        fields:
+          - name: title
+            label: Заголовок
+            type: string
+          - name: text
+            label: Текст
+            type: text
+          - name: buttonLabel
+            label: Текст кнопки
+            type: string
+          - name: buttonUrl
+            label: Посилання кнопки
+            type: string
+
+  - name: prices
+    label: Сторінка “Ціни”
+    type: file
+    path: content/pages/prices.json
+    format: json
+    fields:
+      - name: path
+        type: string
+        hidden: true
+      - name: file
+        type: string
+        hidden: true
+      - name: breadcrumb
+        label: Назва сторінки
+        type: string
+      - name: priority
+        type: string
+        hidden: true
+      - name: seo
+        label: SEO і соцмережі
+        type: object
+        fields:
+          - name: title
+            label: SEO title
+            type: string
+          - name: description
+            label: SEO description
+            type: text
+          - name: ogTitle
+            label: Заголовок для соцмереж
+            type: string
+          - name: ogDescription
+            label: Опис для соцмереж
+            type: text
+          - name: ogImage
+            label: Зображення для соцмереж
+            type: image
+            options:
+              extensions: [webp, jpg, jpeg, png]
+      - name: hero
+        label: Перший екран
+        type: object
+        fields:
+          - name: eyebrow
+            label: Малий підпис
+            type: string
+          - name: title
+            label: Заголовок
+            type: text
+          - name: lead
+            label: Опис
+            type: text
+      - name: tables
+        label: Таблиці цін
+        type: block
+        list: true
+        blockKey: type
+        blocks:
+          - name: singlePrices
+            label: Базові сеанси
+            fields:
+              - name: id
+                type: string
+                hidden: true
+              - name: sectionClass
+                type: string
+                hidden: true
+              - name: columns
+                type: object
+                list: true
+                hidden: true
+                fields:
+                  - name: key
+                    type: string
+                  - name: label
+                    type: string
+              - name: kicker
+                label: Малий підпис
+                type: string
+              - name: title
+                label: Заголовок таблиці
+                type: string
+              - name: rows
+                label: Рядки
+                type: object
+                list: true
+                fields:
+                  - name: service
+                    label: Послуга
+                    type: string
+                  - name: duration
+                    label: Тривалість
+                    type: string
+                  - name: durationNote
+                    label: Примітка до тривалості
+                    type: text
+                  - name: price
+                    label: Ціна
+                    type: string
+                  - name: priceNote
+                    label: Примітка до ціни
+                    type: text
+          - name: rehabPrices
+            label: Комбіновані сеанси
+            fields:
+              - name: id
+                type: string
+                hidden: true
+              - name: sectionClass
+                type: string
+                hidden: true
+              - name: columns
+                type: object
+                list: true
+                hidden: true
+                fields:
+                  - name: key
+                    type: string
+                  - name: label
+                    type: string
+              - name: kicker
+                label: Малий підпис
+                type: string
+              - name: title
+                label: Заголовок таблиці
+                type: string
+              - name: lead
+                label: Опис
+                type: text
+              - name: rows
+                label: Рядки
+                type: object
+                list: true
+                fields:
+                  - name: format
+                    label: Формат
+                    type: string
+                  - name: includes
+                    label: Що входить
+                    type: text
+                  - name: price
+                    label: Ціна
+                    type: string
+                  - name: priceNote
+                    label: Примітка до ціни
+                    type: text
+          - name: packagePrices
+            label: Пакети послуг
+            fields:
+              - name: id
+                type: string
+                hidden: true
+              - name: sectionClass
+                type: string
+                hidden: true
+              - name: columns
+                type: object
+                list: true
+                hidden: true
+                fields:
+                  - name: key
+                    type: string
+                  - name: label
+                    type: string
+              - name: kicker
+                label: Малий підпис
+                type: string
+              - name: title
+                label: Заголовок таблиці
+                type: string
+              - name: rows
+                label: Рядки
+                type: object
+                list: true
+                fields:
+                  - name: category
+                    label: Напрямок
+                    type: string
+                  - name: package
+                    label: Пакет
+                    type: string
+                  - name: packageNote
+                    label: Примітка до пакета
+                    type: text
+                  - name: price
+                    label: Ціна
+                    type: string
+      - name: cta
+        label: Заклик до дії
+        type: object
+        fields:
+          - name: title
+            label: Заголовок
+            type: string
+          - name: text
+            label: Текст
+            type: text
+          - name: buttonLabel
+            label: Текст кнопки
+            type: string
+          - name: buttonUrl
+            label: Посилання кнопки
+            type: string
+
+  - name: about
+    label: Сторінка “Про нас”
+    type: file
+    path: content/pages/about.json
+    format: json
+    fields:
+      - name: path
+        type: string
+        hidden: true
+      - name: file
+        type: string
+        hidden: true
+      - name: breadcrumb
+        label: Назва сторінки
+        type: string
+      - name: priority
+        type: string
+        hidden: true
+      - name: seo
+        label: SEO і соцмережі
+        type: object
+        fields:
+          - name: title
+            label: SEO title
+            type: string
+          - name: description
+            label: SEO description
+            type: text
+          - name: ogTitle
+            label: Заголовок для соцмереж
+            type: string
+          - name: ogDescription
+            label: Опис для соцмереж
+            type: text
+          - name: ogImage
+            label: Зображення для соцмереж
+            type: image
+            options:
+              extensions: [webp, jpg, jpeg, png]
+      - name: hero
+        label: Перший екран
+        type: object
+        fields:
+          - name: eyebrow
+            label: Малий підпис
+            type: string
+          - name: title
+            label: Заголовок
+            type: text
+          - name: lead
+            label: Опис
+            type: text
+      - name: team
+        label: Команда
+        type: object
+        fields:
+          - name: kicker
+            label: Малий підпис
+            type: string
+          - name: title
+            label: Заголовок
+            type: string
+          - name: lead
+            label: Опис
+            type: text
+          - name: members
+            label: Фахівці
+            type: object
+            list: true
+            fields:
+              - name: name
+                label: Ім’я
+                type: string
+              - name: role
+                label: Посада
+                type: string
+              - name: bio
+                label: Опис
+                type: text
+      - name: focus
+        label: Спеціалізація
+        type: object
+        fields:
+          - name: image
+            label: Фото
+            type: image
+            options:
+              extensions: [webp, jpg, jpeg, png]
+          - name: width
+            type: number
+            hidden: true
+          - name: height
+            type: number
+            hidden: true
+          - name: alt
+            label: Опис фото для доступності
+            type: string
+          - name: kicker
+            label: Малий підпис
+            type: string
+          - name: title
+            label: Заголовок
+            type: text
+          - name: lead
+            label: Опис
+            type: text
+          - name: items
+            label: Список станів
+            type: string
+            list: true
+      - name: work
+        label: Командна робота
+        type: object
+        fields:
+          - name: kicker
+            label: Малий підпис
+            type: string
+          - name: title
+            label: Заголовок
+            type: text
+          - name: lead
+            label: Опис
+            type: text
+          - name: cards
+            label: Картки
+            type: object
+            list: true
+            fields:
+              - name: title
+                label: Назва
+                type: string
+              - name: text
+                label: Текст
+                type: text
+      - name: cta
+        label: Заклик до дії
+        type: object
+        fields:
+          - name: title
+            label: Заголовок
+            type: string
+          - name: text
+            label: Текст
+            type: text
+          - name: buttonLabel
+            label: Текст кнопки
+            type: string
+          - name: buttonUrl
+            label: Посилання кнопки
+            type: string
+
+  - name: contacts
+    label: Сторінка “Контакти”
+    type: file
+    path: content/pages/contacts.json
+    format: json
+    fields:
+      - name: path
+        type: string
+        hidden: true
+      - name: file
+        type: string
+        hidden: true
+      - name: breadcrumb
+        label: Назва сторінки
+        type: string
+      - name: priority
+        type: string
+        hidden: true
+      - name: seo
+        label: SEO і соцмережі
+        type: object
+        fields:
+          - name: title
+            label: SEO title
+            type: string
+          - name: description
+            label: SEO description
+            type: text
+          - name: ogTitle
+            label: Заголовок для соцмереж
+            type: string
+          - name: ogDescription
+            label: Опис для соцмереж
+            type: text
+          - name: ogImage
+            label: Зображення для соцмереж
+            type: image
+            options:
+              extensions: [webp, jpg, jpeg, png]
+      - name: hero
+        label: Перший екран
+        type: object
+        fields:
+          - name: eyebrow
+            label: Малий підпис
+            type: string
+          - name: title
+            label: Заголовок
+            type: text
+          - name: lead
+            label: Опис
+            type: text
+      - name: contact
+        label: Адреса і зв’язок
+        type: object
+        fields:
+          - name: kicker
+            label: Малий підпис
+            type: string
+          - name: title
+            label: Заголовок
+            type: string
+          - name: addressTitle
+            label: Заголовок адреси
+            type: string
+          - name: addressLines
+            label: Рядки адреси
+            type: text
+            list: true
+          - name: mapsButtonLabel
+            label: Текст кнопки Google Maps
+            type: string
+          - name: messagesTitle
+            label: Заголовок блоку повідомлень
+            type: string
+          - name: messageText
+            label: Текст перед записом
+            type: text
+          - name: bookingButtonLabel
+            label: Текст кнопки запису
+            type: string
+      - name: visit
+        label: Перед візитом
+        type: object
+        fields:
+          - name: kicker
+            label: Малий підпис
+            type: string
+          - name: title
+            label: Заголовок
+            type: text
+          - name: lead
+            label: Опис
+            type: text
+          - name: cards
+            label: Картки
+            type: object
+            list: true
+            fields:
+              - name: title
+                label: Назва
+                type: string
+              - name: text
+                label: Текст
+                type: text

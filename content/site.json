@@ -1,0 +1,72 @@
+{
+  "site": {
+    "name": "Recovery Line",
+    "alternateName": "Yevstratovi",
+    "language": "uk",
+    "locale": "uk_UA",
+    "url": "https://recovery-line-henna.vercel.app",
+    "robots": "noindex,nofollow",
+    "themeColor": "#182024",
+    "brandNote": "фізична терапія в Києві",
+    "logo": "/assets/images/recovery-line-mark.webp",
+    "heroImage": "/assets/images/hero-therapy.webp",
+    "phone": "+380668788526",
+    "priceRange": "600-1450 UAH",
+    "areaServed": "Київ",
+    "openingHours": "Mo-Su 10:00-20:00",
+    "scheduleText": "понеділок - неділя, 10:00-20:00.",
+    "address": {
+      "streetAddress": "вул. Архітектора Вербицького, 1",
+      "addressLocality": "Київ",
+      "postalCode": "02000",
+      "addressCountry": "UA",
+      "display": "вул. Архітектора Вербицького, 1, Київ"
+    },
+    "links": {
+      "booking": "https://t.me/Yevstratovi",
+      "telegram": "https://t.me/Yevstratovi",
+      "telegramLabel": "@Yevstratovi",
+      "instagram": "https://www.instagram.com/recovery_line_",
+      "instagramLabel": "@recovery_line_",
+      "maps": "https://maps.app.goo.gl/8WQqcA3XppdMVwZr7"
+    },
+    "medicalSpecialty": [
+      "Physical therapy",
+      "Manual therapy",
+      "Rehabilitation"
+    ]
+  },
+  "navigation": [
+    {
+      "key": "home",
+      "label": "Головна",
+      "url": "/"
+    },
+    {
+      "key": "services",
+      "label": "Послуги",
+      "url": "/services/"
+    },
+    {
+      "key": "prices",
+      "label": "Ціни",
+      "url": "/prices/"
+    },
+    {
+      "key": "about",
+      "label": "Про нас",
+      "url": "/about/"
+    },
+    {
+      "key": "contacts",
+      "label": "Контакти",
+      "url": "/contacts/"
+    },
+    {
+      "key": "booking",
+      "label": "Записатися",
+      "url": "https://t.me/Yevstratovi",
+      "cta": true
+    }
+  ]
+}
