@@ -95,7 +95,7 @@ const renderHead = (site, page) => {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapeHtml(page.seo.title)}</title>
   <meta name="description" content="${escapeHtml(page.seo.description)}">
-  <meta name="robots" content="${escapeHtml(page.seo.robots || site.robots)}">
+  <meta name="robots" content="${escapeHtml(page.seo.robots || "index,follow")}">
   <link rel="canonical" href="${escapeHtml(canonicalUrl(site, page))}">
 ${preload}  <link rel="stylesheet" href="${escapeHtml(cssPath)}">
   <link rel="icon" type="image/webp" href="${escapeHtml(iconPath)}">

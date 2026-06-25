@@ -30,15 +30,6 @@ content:
             label: Адреса сайту
             type: string
             required: true
-          - name: robots
-            label: Індексація
-            type: select
-            options:
-              values:
-                - name: noindex,nofollow
-                  label: Не індексувати сайт
-                - name: index,follow
-                  label: Індексувати сайт
           - name: themeColor
             label: Колір теми браузера
             type: string
