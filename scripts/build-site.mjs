@@ -47,6 +47,9 @@ const absoluteUrl = (site, value = "") => {
   return `${site.url}${value.startsWith("/") ? value : `/${value}`}`;
 };
 
+const renderSrcset = (page, sources = []) =>
+  sources.map((source) => `${assetPath(page, source.src)} ${source.width}w`).join(", ");
+
 const linkHref = (page, url = "") => {
   if (isExternalUrl(url) || url.startsWith("#") || url.startsWith("tel:") || url.startsWith("mailto:")) {
     return url;
@@ -78,15 +81,16 @@ ${items.map((item) => `            <li>${escapeHtml(item)}</li>`).join("\n")}
 const renderImage = (page, image, className = "") => {
   const classAttr = className ? ` class="${className}"` : "";
 
-  return `<img${classAttr} src="${escapeHtml(assetPath(page, image.image))}" width="${escapeHtml(image.width)}" height="${escapeHtml(image.height)}" alt="${escapeHtml(image.alt)}" loading="lazy">`;
+  return `<img${classAttr} src="${escapeHtml(assetPath(page, image.image))}" width="${escapeHtml(image.width)}" height="${escapeHtml(image.height)}" alt="${escapeHtml(image.alt)}" loading="lazy" decoding="async">`;
 };
 
 const renderHead = (site, page) => {
   const cssPath = assetPath(page, "/assets/styles.css");
   const scriptPath = assetPath(page, "/assets/menu.js");
   const iconPath = assetPath(page, site.logo);
+  const preloadSrcset = renderSrcset(page, page.seo.preloadImageSrcSet);
   const preload = page.seo.preloadImage
-    ? `  <link rel="preload" as="image" href="${escapeHtml(assetPath(page, page.seo.preloadImage))}" fetchpriority="high">\n`
+    ? `  <link rel="preload" as="image" href="${escapeHtml(assetPath(page, page.seo.preloadImage))}"${preloadSrcset ? ` imagesrcset="${escapeHtml(preloadSrcset)}"` : ""}${page.seo.preloadImageSizes ? ` imagesizes="${escapeHtml(page.seo.preloadImageSizes)}"` : ""} fetchpriority="high">\n`
     : "";
   const themeColor = page.path === "/" ? `  <meta name="theme-color" content="${escapeHtml(site.themeColor)}">\n` : "";
 
@@ -97,7 +101,8 @@ const renderHead = (site, page) => {
   <meta name="description" content="${escapeHtml(page.seo.description)}">
   <meta name="robots" content="${escapeHtml(page.seo.robots || "index,follow")}">
   <link rel="canonical" href="${escapeHtml(canonicalUrl(site, page))}">
-${preload}  <link rel="stylesheet" href="${escapeHtml(cssPath)}">
+${preload}  <script>document.documentElement.classList.add("has-menu-js");</script>
+  <link rel="stylesheet" href="${escapeHtml(cssPath)}">
   <link rel="icon" type="image/webp" href="${escapeHtml(iconPath)}">
   <script src="${escapeHtml(scriptPath)}" defer></script>
   <meta property="og:type" content="website">
@@ -113,7 +118,7 @@ ${themeColor}  ${renderStructuredData(site, page)}
 const renderHeader = (site, navigation, pageKey, page) => `<header class="site-header">
     <div class="header-inner">
       <a class="brand" href="${escapeHtml(linkHref(page, "/"))}" aria-label="${escapeHtml(site.name)}">
-        <img class="brand-mark" src="${escapeHtml(assetPath(page, site.logo))}" width="44" height="44" alt="">
+        <img class="brand-mark" src="${escapeHtml(assetPath(page, site.logo))}" width="44" height="44" alt="" decoding="async">
         <span>
           <span class="brand-name">${escapeHtml(site.name)}</span>
           <span class="brand-note">${escapeHtml(site.brandNote)}</span>
@@ -160,6 +165,19 @@ const renderPageHero = (page) => `<section class="page-hero">
       </div>
     </section>`;
 
+const renderHomeHeroMedia = (page) => {
+  if (!page.hero.image) {
+    return "";
+  }
+
+  const image = page.hero.image;
+  const srcset = renderSrcset(page, image.srcset);
+
+  return `<div class="hero-media" aria-hidden="true">
+        <img src="${escapeHtml(assetPath(page, image.src))}"${srcset ? ` srcset="${escapeHtml(srcset)}"` : ""}${image.sizes ? ` sizes="${escapeHtml(image.sizes)}"` : ""} width="${escapeHtml(image.width)}" height="${escapeHtml(image.height)}" alt="" loading="eager" fetchpriority="high" decoding="async">
+      </div>`;
+};
+
 const renderSectionHeader = (section, centered = false) => `<div class="section-header${centered ? " centered" : ""}">
           <p class="section-kicker">${escapeHtml(section.kicker)}</p>
           <h2 class="section-title" id="${escapeHtml(section.id || slugify(section.title))}">${escapeHtml(section.title)}</h2>
@@ -189,6 +207,7 @@ const renderCta = (cta) => `<section class="section compact">
     </section>`;
 
 const renderHome = (page) => `<section class="hero" aria-labelledby="hero-title">
+      ${renderHomeHeroMedia(page)}
       <div class="hero-inner">
         <p class="eyebrow">${escapeHtml(page.hero.eyebrow)}</p>
         <h1 id="hero-title">${escapeHtml(page.hero.title)}</h1>

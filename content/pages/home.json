@@ -9,12 +9,39 @@
     "ogTitle": "Recovery Line | Фізична терапія та реабілітація в Києві",
     "ogDescription": "Відновлення руху, зменшення болю та повернення до активного життя через фізичну терапію, мануальну терапію, масаж і кінезіотерапію.",
     "ogImage": "/assets/images/recovery-line-mark.webp",
-    "preloadImage": "/assets/images/hero-therapy.webp"
+    "preloadImage": "/assets/images/hero-therapy.webp",
+    "preloadImageSrcSet": [
+      {
+        "src": "/assets/images/hero-therapy-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/assets/images/hero-therapy.webp",
+        "width": 1200
+      }
+    ],
+    "preloadImageSizes": "100vw"
   },
   "hero": {
     "eyebrow": "Київ, лівий берег",
     "title": "Recovery Line: фізична терапія, масаж і реабілітація",
     "lead": "Допомагаємо відновити рухливість, зменшити біль і повернутися до роботи, спорту та повсякденного життя після травм, операцій і тривалого перенавантаження.",
+    "image": {
+      "src": "/assets/images/hero-therapy.webp",
+      "srcset": [
+        {
+          "src": "/assets/images/hero-therapy-720.webp",
+          "width": 720
+        },
+        {
+          "src": "/assets/images/hero-therapy.webp",
+          "width": 1200
+        }
+      ],
+      "sizes": "100vw",
+      "width": 1200,
+      "height": 1600
+    },
     "actions": [
       {
         "label": "Записатися в Telegram",

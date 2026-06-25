@@ -11,6 +11,10 @@
   header.dataset.menuOpen = "false";
   button.hidden = false;
 
+  requestAnimationFrame(() => {
+    document.documentElement.classList.add("has-menu-ready");
+  });
+
   const isOpen = () => header.dataset.menuOpen === "true";
 
   const setMenuState = (open) => {
